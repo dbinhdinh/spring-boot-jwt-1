@@ -30,6 +30,7 @@ dependencies {
     implementation('mysql:mysql-connector-java')
     implementation('org.springframework.boot:spring-boot-starter-data-jpa')
     implementation('org.springframework.boot:spring-boot-starter-data-redis')
+//    implementation('redis.client:jedis')
     implementation('org.flywaydb:flyway-core')
 //    implementation('com.zaxxer:HikariCP:3.3.1') // already included on starter-data-jpa
 
@@ -42,6 +43,8 @@ dependencies {
     implementation('org.apache.httpcomponents:httpclient:4.5.8')
     implementation('org.apache.commons:commons-collections4:4.3')
 
+//    Test
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 
 bootRun {

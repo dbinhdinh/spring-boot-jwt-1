@@ -29,7 +29,7 @@ spring:
             hibernate:
                 dialect: org.hibernate.dialect.MySQL5InnoDBDialect
     redis:
-        host: localhost
+        host: nghia.tool2
         port: 6379
         lettuce:
             pool:
@@ -37,9 +37,6 @@ spring:
                 max-idle: 7
                 max-wait: 1
                 min-idle: 2
-        jedis:
-            pool:
-                max-active:
 #        password: none
 cus.security:
     auth:

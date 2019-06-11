@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RedisJwtTokenService {
+    public static final String TOKEN_KEY = "tkk";
 
     @Autowired
     private RedisTemplate redisTemplate;
