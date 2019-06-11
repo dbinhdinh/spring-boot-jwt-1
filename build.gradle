@@ -1,0 +1,53 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.5.RELEASE'
+    id 'java'
+}
+apply plugin: 'io.spring.dependency-management'
+
+
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation('org.springframework.boot:spring-boot-starter-web')
+
+//  Security
+    implementation('org.springframework.boot:spring-boot-starter-security')
+    implementation('io.jsonwebtoken:jjwt:0.9.1')
+
+//Database
+    implementation('mysql:mysql-connector-java')
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    implementation('org.springframework.boot:spring-boot-starter-data-redis')
+    implementation('org.flywaydb:flyway-core')
+//    implementation('com.zaxxer:HikariCP:3.3.1') // already included on starter-data-jpa
+
+    annotationProcessor('org.springframework.boot:spring-boot-configuration-processor')
+
+// Support develop environment
+    compileOnly('org.projectlombok:lombok')
+    annotationProcessor('org.projectlombok:lombok')
+    developmentOnly('org.springframework.boot:spring-boot-devtools')
+    implementation('org.apache.httpcomponents:httpclient:4.5.8')
+    implementation('org.apache.commons:commons-collections4:4.3')
+
+}
+
+bootRun {
+    jvmArgs = [
+            "-Dspring.output.ansi.enabled=ALWAYS",
+            "-Xdebug",
+            "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5015"
+    ]
+}

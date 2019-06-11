@@ -1,0 +1,55 @@
+app:
+    jwtExpirationInMs: 604800000
+    jwtSecret: JWTSuperSecretKey
+logging:
+    level:
+        org:
+            hibernate:
+                SQL: DEBUG
+server:
+    compression:
+        enabled: true
+    port: 8012
+spring:
+    datasource:
+        dbcp2:
+            driver-class-name: com.mysql.jdbc.Driver
+#        initialization-mode: always
+        username: root
+        password: root
+        url: jdbc:mysql://nghia.tool2:3306/jwt_mysql?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf-8&autoReconnect=true&verifyServerCertificate=false&useSSL=false&requireSSL=false
+#       Hikari document: https://github.com/brettwooldridge/HikariCP#configuration-knobs-baby
+        hikari:
+            login-timeout: 30
+            connection-timeout: 30000 #ms
+    jpa:
+        hibernate:
+            ddl-auto: validate
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    redis:
+        host: localhost
+        port: 6379
+        lettuce:
+            pool:
+                max-active: 7
+                max-idle: 7
+                max-wait: 1
+                min-idle: 2
+        jedis:
+            pool:
+                max-active:
+#        password: none
+cus.security:
+    auth:
+        -
+            serviceId: auth-server
+            path: /auth/login, /auth/token/refres
+            expression: permitAll
+        -
+            path: /users/me
+            expression: "@otatalkAuthorizationService.hasRole('ADMIN')"
+        -
+            path: /auth/user/**
+            expression: permitAll
