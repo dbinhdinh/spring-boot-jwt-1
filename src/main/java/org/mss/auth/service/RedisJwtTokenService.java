@@ -58,15 +58,22 @@ public class RedisJwtTokenService {
      */
 
     public void removeKey(String accessToken) {
-
+        this.redisTemplate.delete(accessToken);
     }
 
 
     /**
-     * update key ~ saveKey ?
+     * update info of a key ?
      */
 
     public void updateKey(String accessToken) {
 
+    }
+
+    public User getTokenInfo(String accessToken) {
+        Object res = this.redisTemplate.opsForValue().get(accessToken);
+        if (res != null ){
+            return (User) res;
+        } return null;
     }
 }
