@@ -72,7 +72,7 @@ public class AuthServiceImpl implements UserDetailsService {
 
         return TokenInfo.builder()
                 .accessToken(accessToken)
-                .expiresIn(expireTime)
+                .expireAt(expireTime)
                 .refreshToken(refreshToken)
                 .tokenType("bearer")
                 .build();

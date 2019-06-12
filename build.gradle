@@ -19,8 +19,15 @@ repositories {
     mavenCentral()
 }
 
+configurations.compile {
+    exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+//    exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+//    exclude group: 'org.springframework.boot', module: 'logback-classic'
+}
+
 dependencies {
     implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation("org.springframework.boot:spring-boot-starter-undertow")
 
 //  Security
     implementation('org.springframework.boot:spring-boot-starter-security')

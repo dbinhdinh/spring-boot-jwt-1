@@ -3,6 +3,9 @@ package org.mss.auth;
 import org.junit.Before;
 import org.junit.Test;
 import org.mss.auth.model.User;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.core.serializer.support.DeserializingConverter;
+import org.springframework.core.serializer.support.SerializingConverter;
 import org.springframework.data.redis.core.HashOperations;
 
 import javax.annotation.Resource;
@@ -17,24 +20,33 @@ import javax.annotation.Resource;
  * entries(H key): Fetches entire hash stored at key.
  * delete(H key, Object... hashKeys): Deletes given hash hashKeys at key.
  */
-public class RedisHashOperationTest extends RedisTest {
+public class RedisHashOperationTest<serializer> extends RedisTest {
     private static final String KEY = "employeesKey";
 
     @Resource(name = "redisTemplate")
     private HashOperations<String, Long, User> hashOps;
     private User user;
 
+
+    private Converter<Object, byte[]> serializer;
+    private Converter<byte[], Object> deserializer;
+
     @Before
     public void init() {
+        serializer = new SerializingConverter();
+        deserializer = new DeserializingConverter();
+
         user = new User();
         user.setId(Long.valueOf(10L));
         user.setEmail("mail@mail.com");
     }
 
+    @Test
     public void addEmployee() {
         hashOps.putIfAbsent(KEY, user.getId(), user);
     }
 
+    @Test
     public void updateEmployee() {
         hashOps.put(KEY, user.getId(), user);
     }
@@ -44,10 +56,12 @@ public class RedisHashOperationTest extends RedisTest {
         System.out.println(hashOps.get(KEY, id));
     }
 
-    public long getNumberOfEmployees() {
+    @Test
+    public void getNumberOfEmployees() {
         System.out.println(hashOps.size(KEY));
     }
 
+    @Test
     public void getAllEmployees() {
         hashOps.entries(KEY).forEach((k, v) -> {
             System.out.println("key: " + k);
@@ -56,6 +70,7 @@ public class RedisHashOperationTest extends RedisTest {
 
     }
 
+    @Test
     public long deleteEmployees(Integer... ids) {
         return hashOps.delete(KEY, (Object) ids);
     }

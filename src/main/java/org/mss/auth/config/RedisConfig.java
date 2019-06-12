@@ -16,6 +16,7 @@ public class RedisConfig {
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
         configuration.setHostName("nghia.tool2");
         configuration.setDatabase(1);
+        configuration.setPassword("password");
         return new LettuceConnectionFactory(configuration);
     }
 
